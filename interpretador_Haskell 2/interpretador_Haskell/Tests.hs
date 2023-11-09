@@ -6,6 +6,7 @@ module Tests where
 
 import Interpreter (interp0)
 import Types
+import Distribution.Compat.CharParsing (CharParsing(string))
 
 test :: String -> String -> Value -> IO ()
 test description code value =
@@ -27,7 +28,6 @@ main = do
   test "Fatorial" "(letrec fatorial (lambda x (if x (* x (call fatorial (- x 1))) 1)) (call fatorial 5))" (NumV 120)
   -- nossos testes abaixo daqui
 
--- ----------------------------------------------------------------------------
 -- Caso tenha o Haskell Language Server instalado em sua IDE de escolha,
 -- você também pode rodar código da seguinte forma:
 -- >>> interp0 "(+ 10 (call (lambda x (head x)) (cons 15 16)))"

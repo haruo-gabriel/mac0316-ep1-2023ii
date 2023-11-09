@@ -199,6 +199,8 @@ data Value
     ConsV { headV :: Value, tailV :: Value }
   | -- | Representa um símbolo.
     SymV  { symbolV :: String }
+  | -- | Representa uma string.
+    StrV  { stringV :: String }
   deriving (Show, Eq)
 
 -- | Vínculo entre um identificador (nome) e um valor.
