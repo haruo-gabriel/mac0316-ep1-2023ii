@@ -1,0 +1,73 @@
+lingSimples - trabalho 2023 - versão 2
+
+Nesta versão da linguagem, várias formações de expressões são admitidas no parser, mas não podem ser computadas (avaliadas) porque infringem os tipos. Na versão 2 podemos restringir a montagem das expressões para que sejam rejeitadas já no parser, sem deixar que passem para a execução.
+
+Software disponível (acessado em out/2023) para escrever/reconhecer a sintaxe de linguagens
+ 
+ https://bnfplayground.pauliankline.com/
+
+/* gramática utilizada no trabalho 1 - 2023 */
+/* a gramática abaixo pode ser submetida ao software sugerido para que vocês possam entender quais expressões são aceitas na linguagem */
+
+<number>        ::= <intnum> | <intnum> "." <intnum>
+<other_symb>    ::=  "_" | "! " | "?" | "<" | ">" | "#" | "%"
+<reserv_symb>   ::=   "(" | ")" | "+" | "-" | "*" | "~" 
+<symbol>        ::=  <reserv_symb> | <other_symb>
+<reserv_word>   ::=  "cons" | "head" | "tail" | 
+           "if" | "let" | "letrec" | 
+           "lambda" | "call" 
+<reservedW>     ::=  <reserv_symb> | <reserv_word>
+/* -- Aqui, mudamos o código do id -- */
+<id>            ::=  <letter> <id_rest>
+<id_rest>       ::=  <letter> | <digit> | "" 
+<letter>        ::=  "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z" | "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z"
+<digit>         ::=  "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+
+/* -- Operadores Aritméticos -- */
+<op_arith_bin> ::= " + " | " - " | " * " | " % " 
+<op_arith_un>  ::= " ~ "
+
+/* -- Expressões Aritméticas -- */
+<arith_expr> ::= "(" <exprA_bin> ")" | "(" <exprA_un> ")" | <number>
+<exprA_bin>  ::= <op_arith_bin> <code> " " <code>
+<exprA_un>   ::= <op_arith_un> <code> 
+
+
+/* -- Operadores Listas -- */
+<op_list>      ::= "head " | "tail "
+
+/* -- Expressões sobre listas -- */
+<list_expr>  ::= <cons> | "(" <exprL>  ")"
+<cons>       ::= "(cons " <code> " " <code> ")"
+<exprL>      ::= <op_list>  <code> 
+
+
+/* -- Expressões Lambda (definição e aplicação de funções) -- */
+<lamb_expr> ::=  <lambda> | <call> 
+<lambda>    ::= "(lambda " <param> " "  <code> ")"
+<param>     ::= <id>
+<call>      ::= "(call " <lambda> " " <code> ")"
+
+/* -- expressões if -- */
+<if>    ::= "if " <cond>  " " <pos>  " " <neg> 
+<cond>  ::= <code>
+<pos>   ::= <code>
+<neg>   ::= <code>
+
+/* -- expressões let  -- */         
+<let_expr>  ::=  <let> | <letrec> 
+<let>       ::= "(let " <id> " "  <def>  " " <body> ")"
+<letrec>    ::= "(letrec " <id> " "  <lambda>  " " <body> ")"
+<def>       ::= <code>
+<body>      ::= <code>
+
+
+/* -- Código do programa -- */
+<code>  ::=  <expr> | <number>
+
+<expr>  ::=  <arith_expr> | <list_expr> | <lamb_expr> | <if> | <let_expr> |  <quote>
+
+
+/* -- expressões quote -- */
+<quote>     ::=  <code> | <id>
+
