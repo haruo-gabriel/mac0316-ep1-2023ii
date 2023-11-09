@@ -95,6 +95,12 @@ analyze tree = case tree of
                             (getSymbol 3) (analyzePos 4)
                             (analyzePos 5)
     Leaf "letrec" -> LetrecS (getSymbol 1) (analyzePos 2) (analyzePos 3)
+    -- Adicionando funcionalidade id
+    Leaf "id" -> case analyzePos 1 of
+        IdS s -> if s `elem` ["lambda", "call", "if", "cons", "head", "tail", "let", "letrec"]
+            then error ("ERRO analyze: palavra reservada não pode ser usada como identificador: " ++ s)
+            else IdS s
+    --
     Leaf "quote"  -> QuoteS (show (tree `index` 1))
     _ -> error ("ERRO analyze: elemento da parse tree inesperado (" ++ show first ++ ")")
     where
