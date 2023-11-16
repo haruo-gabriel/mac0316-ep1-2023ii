@@ -32,6 +32,7 @@ import Env (extendEnv, lookupEnv)
 eval :: ExprC -> Env -> Value
 eval exp env = case exp of
   NumC  num   -> NumV num
+  BoolC bool  -> BoolV bool
   IdC   sym   -> lookupEnv sym env
   PlusC e1 e2 ->
     case (eval e1 env, eval e2 env) of 
@@ -50,13 +51,21 @@ eval exp env = case exp of
     where
       closure  = eval fun env
       argvalue = eval arg env
+
+  --- Modificando o if
+
   IfC cond b1 b2 ->
     case eval cond env of
-      NumV num ->
-        if num /= 0
+      BoolV bool ->
+        if bool == "true"
           then eval b1 env
-          else eval b2 env
-      _ -> error "ERRO eval IfC: condição não é um número"
+        else if bool == "false"
+          then eval b2 env
+        else error "ERRO eval IfC: condição não é um booleano"
+      _ -> error "ERRO eval IfC: condição não é um booleano"
+
+  --
+
   ConsC e1 e2    -> ConsV (eval e1 env) (eval e2 env)
   HeadC e        ->
     case eval e env of

@@ -89,6 +89,8 @@ data ExprS
     NumS     { numS :: Double }
   | -- | Representa um identificador, um nome para valores do ambiente.
     IdS      { idS :: String }
+  | -- | Representa um valor booleano.
+    BoolS    { boolS :: String }
   | -- | Representa a operação de soma.
     PlusS    { leftS :: ExprS, rightS :: ExprS }
   | -- Representa a operação de multiplicação.
@@ -153,6 +155,8 @@ data ExprC
     NumC    { numC :: Double }
   | -- | Representa um identificador, um nome para valores do ambiente. 
     IdC     { idC :: String }
+  | -- Representa um valor booleano.
+    BoolC   { boolC :: String }
   | -- | Representa a operação de soma.
     PlusC   { leftC :: ExprC, rightC :: ExprC }
   | -- | Representa a operação de multiplicação.
@@ -192,6 +196,8 @@ data ExprC
 data Value
   = -- | Representa um número.
     NumV  { numV :: Double }
+  | -- | Representa um valor booleano.
+    BoolV { boolV :: String }
   | -- | Representa um fechamento, que é a associação de um código a
     -- ser executado com um ambiente.
     ClosV { argNameV :: String, body :: ExprC, env :: Env }

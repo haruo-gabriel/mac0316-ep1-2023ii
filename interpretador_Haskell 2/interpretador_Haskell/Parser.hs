@@ -77,10 +77,18 @@ analyze tree = case tree of
       case readMaybe token of
         Just num -> NumS num
         Nothing -> error ("ERRO analyze: número inválido: " ++ token)
-    | isSymbol token -> IdS token
+    | isSymbol token ->
+      case token of
+        "true" -> BoolS "true"
+        "false" -> BoolS "false"
+        _ -> IdS token
     | otherwise -> error "ERRO analyze: token inválido"
   Pair first rest -> case first of
     Leaf "+" -> PlusS (analyzePos 1) (analyzePos 2)
+    -- Adicionando funcionalidade bool
+    -- Leaf "true" -> BoolS "true"
+    -- Leaf "false" -> BoolS "false"
+    --
     Leaf "*" -> MultS (analyzePos 1) (analyzePos 2)
     Leaf "-" -> BMinusS (analyzePos 1) (analyzePos 2)
     Leaf "~" -> UMinusS (analyzePos 1)
@@ -100,7 +108,7 @@ analyze tree = case tree of
         IdS s -> if s `elem` ["lambda", "call", "if", "cons", "head", "tail", "let", "letrec"]
             then error ("ERRO analyze: palavra reservada não pode ser usada como identificador: " ++ s)
             else IdS s
-    --
+    ---
     Leaf "quote"  -> QuoteS (show (tree `index` 1))
     _ -> error ("ERRO analyze: elemento da parse tree inesperado (" ++ show first ++ ")")
     where

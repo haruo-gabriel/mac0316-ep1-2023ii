@@ -10,6 +10,7 @@ Software disponível (acessado em out/2023) para escrever/reconhecer a sintaxe d
 /* a gramática abaixo pode ser submetida ao software sugerido para que vocês possam entender quais expressões são aceitas na linguagem */
 
 <number>        ::= <intnum> | <intnum> "." <intnum>
+<bool>          ::= "true" | "false"
 <other_symb>    ::=  "_" | "! " | "?" | "<" | ">" | "#" | "%"
 <reserv_symb>   ::=   "(" | ")" | "+" | "-" | "*" | "~" 
 <symbol>        ::=  <reserv_symb> | <other_symb>
@@ -49,8 +50,8 @@ Software disponível (acessado em out/2023) para escrever/reconhecer a sintaxe d
 <call>      ::= "(call " <lambda> " " <code> ")"
 
 /* -- expressões if -- */
-<if>    ::= "if " <cond>  " " <pos>  " " <neg> 
-<cond>  ::= <code>
+<if>    ::= "if " <cond>  " " <pos>  " " <neg>
+<cond>  ::= <bool>
 <pos>   ::= <code>
 <neg>   ::= <code>
 

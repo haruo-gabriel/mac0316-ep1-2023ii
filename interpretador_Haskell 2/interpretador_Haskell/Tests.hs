@@ -22,11 +22,12 @@ test description code value =
 -- adicione os testes que quiser a mais no main abaixo
 main :: IO ()
 main = do
-  test "Test 1" "(+ 10 (call (lambda x (head x)) (cons 15 16)))" (NumV 25)
-  test "Test 2" "(call (lambda x (+ x 5)) 8)" (NumV 13)
-  test "Test 3" "(call (lambda f (call f (~ 32))) (lambda x (- 200 x)))" (NumV 232)
-  test "Fatorial" "(letrec fatorial (lambda x (if x (* x (call fatorial (- x 1))) 1)) (call fatorial 5))" (NumV 120)
-  -- nossos testes abaixo daqui
+  --test "Test 1" "(+ 10 (call (lambda x (head x)) (cons 15 16)))" (NumV 25)
+  --test "Test 2" "(call (lambda x (+ x 5)) 8)" (NumV 13)
+  --test "Test 3" "(call (lambda f (call f (~ 32))) (lambda x (- 200 x)))" (NumV 232)
+  -- test "Fatorial" "(letrec fatorial (lambda x (if x (* x (call fatorial (- x 1))) 1)) (call fatorial 5))" (NumV 120)
+  test "Test 4" "(if false (+ 1 2) (+ 10 20))" (NumV 3)
+  -- test "Gustavaz" "(call (lambda lan.b (+ lan.b 5)) 8)" (NumV 13)
 
 -- Caso tenha o Haskell Language Server instalado em sua IDE de escolha,
 -- você também pode rodar código da seguinte forma:

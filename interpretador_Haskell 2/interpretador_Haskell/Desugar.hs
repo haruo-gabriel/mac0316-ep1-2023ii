@@ -29,6 +29,7 @@ desugar :: ExprS -> ExprC
 desugar expr = case expr of
   NumS  num      -> NumC num
   IdS   sym      -> IdC sym
+  BoolS bool     -> BoolC bool
   PlusS e1 e2    -> PlusC (desugar e1) (desugar e2)
   MultS e1 e2    -> MultC (desugar e1) (desugar e2)
   BMinusS e1 e2  -> PlusC (desugar e1) (MultC (NumC (-1)) (desugar e2))
