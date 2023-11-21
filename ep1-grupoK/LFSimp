@@ -21,7 +21,8 @@ Software disponível (acessado em out/2023) para escrever/reconhecer a sintaxe d
                      "if" | "let" | "letrec" | 
                      "lambda" | "call" 
 <reservedW>     ::=  <reserv_symb> | <reserv_word>
-<id>            ::=  (<character>)+
+<id>            ::=  <letter> (<letter> | <digit>)+
+<bool>          ::= "true" | "false"
 
 /* -- Operadores Aritméticos -- */
 <op_arith_bin> ::= " + " | " - " | " * " | " % " 
@@ -50,7 +51,7 @@ Software disponível (acessado em out/2023) para escrever/reconhecer a sintaxe d
 
 /* -- expressões if -- */
 <if>    ::= "if " <cond>  " " <pos>  " " <neg> 
-<cond>  ::= <code>
+<cond>  ::= <bool>
 <pos>   ::= <code>
 <neg>   ::= <code>
 

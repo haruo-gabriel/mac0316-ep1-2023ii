@@ -9,21 +9,20 @@ Software disponível (acessado em out/2023) para escrever/reconhecer a sintaxe d
 /* gramática utilizada no trabalho 1 - 2023 */
 /* a gramática abaixo pode ser submetida ao software sugerido para que vocês possam entender quais expressões são aceitas na linguagem */
 
+<character>     ::= <letter> | <digit> | <symbol>
+<letter>        ::= [a-z] | [A-Z] 
+<digit>         ::= [0-9]
+<intnum>        ::= <digit>+
 <number>        ::= <intnum> | <intnum> "." <intnum>
-<bool>          ::= "true" | "false"
 <other_symb>    ::=  "_" | "! " | "?" | "<" | ">" | "#" | "%"
 <reserv_symb>   ::=   "(" | ")" | "+" | "-" | "*" | "~" 
 <symbol>        ::=  <reserv_symb> | <other_symb>
 <reserv_word>   ::=  "cons" | "head" | "tail" | 
-           "if" | "let" | "letrec" | 
-           "lambda" | "call" 
+                     "if" | "let" | "letrec" | 
+                     "lambda" | "call" 
 <reservedW>     ::=  <reserv_symb> | <reserv_word>
-/* -- Aqui, mudamos o código do id -- */
-<id>            ::=  <letter> | <letter> <id_rest>
-<id_rest>       ::=  <letter> | <digit> | <letter> <id_rest> | <digit> <id_rest>
-<letter>        ::=  "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z" | "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z"
-<digit>         ::=  "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
-/* --  -- */
+<id>            ::=  <letter> (<letter> | <digit>)+
+<bool>          ::= "true" | "false"
 
 /* -- Operadores Aritméticos -- */
 <op_arith_bin> ::= " + " | " - " | " * " | " % " 
@@ -51,7 +50,7 @@ Software disponível (acessado em out/2023) para escrever/reconhecer a sintaxe d
 <call>      ::= "(call " <lambda> " " <code> ")"
 
 /* -- expressões if -- */
-<if>    ::= "if " <cond>  " " <pos>  " " <neg>
+<if>    ::= "if " <cond>  " " <pos>  " " <neg> 
 <cond>  ::= <bool>
 <pos>   ::= <code>
 <neg>   ::= <code>
@@ -67,9 +66,8 @@ Software disponível (acessado em out/2023) para escrever/reconhecer a sintaxe d
 /* -- Código do programa -- */
 <code>  ::=  <expr> | <number>
 
-<expr>  ::=  <arith_expr> | <list_expr> | <lamb_expr> | <if> | <let_expr> |  <quote>
+<expr>  ::=  <arith_expr> | <list_expr> | <lamb_expr> | <if> | <let_expr> 
 
 
-/* -- expressões quote -- */
-<quote>     ::=  <code> | <id>
+
 
